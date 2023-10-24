@@ -1,0 +1,176 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+    int pageNo = 0;
+    Pager pager = new Pager();
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.curentPage;
+    }
+}
+
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Quản lý sản phẩm</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <a asp-controller="Product" asp-action="Create" type="button" class="btn btn-primary">Create product</a>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="card">
+            
+            <!-- /.card-header -->
+            <div class="card-body">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title text-center">Danh sách sản phẩm</h3>
+
+                      
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0" id="wrap_table">
+                       
+
+                    </div>
+                    <!-- /.card-body -->
+                   
+                    <div class="card-fotter mt-4 ">
+                        <nav aria-label="Page navigation example navigation_bar" style="cursor: pointer">
+
+                            @if (pager.totalPage > 0)
+                            {
+                                <ul class="pagination justify-content-center">
+
+                                    @if (pager.curentPage > 0)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link"  data-page="1">First</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link"  data-page="@(pager.curentPage - 1 < 1 ? 1 : pager.curentPage - 1)">Previous</a>
+                                        </li>
+                                    }
+
+                                    @for (int p = pager.startPage; p <= pager.endPage; p++)
+                                    {
+                                        <li class="page-item   @(p == pager.curentPage ? "active" : "")" data-page="@p">
+                                            <a class="page-link"  date-page="@p">@p</a>
+                                        </li>
+                                    }
+                                    <li class="page-item">
+                                        <a class="page-link"  data-page="@(pager.curentPage + 1 > pager.totalPage ? pager.totalPage : pager.curentPage + 1)">Next</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link"  data-page="@(pager.totalPage)">Last</a>
+                                    </li>
+
+                                </ul>
+                            }
+
+                           
+                        </nav>
+
+
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </section>
+    <!-- /.content -->
+
+
+
+@section Scripts {
+    <script>
+       $(document).ready(function() {
+            $('body').on('click', '.btnDelete', function() {
+                const id = $(this).data("id")
+                var conf = confirm("Do you want delete this product ?")
+                if(conf === true) {
+                    alert(id)
+                    $.ajax({
+                        url: '/Product/Delete',
+                        type: 'POST',
+                        data: {id: id},
+                        success: function(response) {
+                            if (response.success) {
+                                $('#row-' + id).remove();
+                            } 
+                        } ,
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    })
+                }
+            })
+            //////
+
+            const page = $('.page-item .active').data("page") || null
+
+            
+            $.ajax({
+                url: "/Product/GetAllPanigationProduct",
+                method: "GET",
+                data: { page },
+                success: function (data) {
+                    if (data != null) {
+                        $('#wrap_table').html(data)
+                    }
+                },
+                error: function (error) {
+                    console.log("Error: " + error);
+                }
+            });
+
+            // event clikck page
+
+            $('body').on('click', '.page-item', function () {
+                const element1 = $(this)
+                const element2 = $('.active');
+                element2.removeClass('active')
+                element1.addClass('active')
+                const page = element1.data("page")
+    
+
+                  
+                $.ajax({
+                    url: "/Product/GetAllPanigationProduct",
+                    method: "GET",
+                    data: { page },
+                    success: function (data) {
+                        if (data != null) {
+                            $('#wrap_table').html(data)
+                        }
+                    },
+                    error: function (error) {
+                        console.log("Error: " + error);
+                    }
+            })
+                    
+                })
+       })
+    </script>
+
+    <script src="~/plugins/jsgrid/demos/db.js"></script>
+    <script src="~/plugins/jsgrid/jsgrid.min.js"></script>
+ }
+
