@@ -1,6 +1,7 @@
 ﻿using BTL_WEB_MVC.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ShopMobile.Data;
 using ShopMobile.Models;
@@ -40,6 +41,7 @@ namespace ShopMobile.Controllers
 
         public IActionResult Create()
         {
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName");
 
             return View();
         }
@@ -48,7 +50,7 @@ namespace ShopMobile.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Product product)
         {
-            User user = UserService.findOneUser(db, AuthController.CheckAuthentication(HttpContext));
+            User user = AuthController.CheckAuthentication(db, HttpContext);
             if (user == null)
             {
                 TempData["error"] = "Create precate deny permission";
@@ -69,7 +71,7 @@ namespace ShopMobile.Controllers
                 return RedirectToAction("Index");
             }
             TempData["error"] = "Create a new product false";
-
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName");
             return View("Create");
         }
 
@@ -86,7 +88,8 @@ namespace ShopMobile.Controllers
             {
                 return NotFound();
             }
-              return View(product);
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName");
+            return View(product);
                       
         }
 
@@ -94,10 +97,11 @@ namespace ShopMobile.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Product product)
         {
-            User user = UserService.findOneUser(db, AuthController.CheckAuthentication(HttpContext));
+            User user = AuthController.CheckAuthentication(db, HttpContext);
             if (user == null)
             {
                 TempData["error"] = "You need to login";
+                ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName");
                 return View("Edit");
             }
 

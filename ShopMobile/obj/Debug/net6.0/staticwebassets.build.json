@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "h7Ny1dFWlQS49DlwghFPlWei+3v7LTmO56dj2G6V9HQ=",
+  "Hash": "YuHvHiVL1lIZ6lMr6Cm3KGQ9Q2uvLu67UpPGZpI1jtc=",
   "Source": "ShopMobile",
   "BasePath": "_content/ShopMobile",
   "Mode": "Default",
@@ -1409,6 +1409,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\amdin_monkey.jpg"
+    },
+    {
+      "Identity": "D:\\LTTWEB-CNNT3\\ShopMobile\\ShopMobile\\wwwroot\\images\\avartar_user.png",
+      "SourceId": "ShopMobile",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\LTTWEB-CNNT3\\ShopMobile\\ShopMobile\\wwwroot\\",
+      "BasePath": "_content/ShopMobile",
+      "RelativePath": "images/avartar_user.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\avartar_user.png"
     },
     {
       "Identity": "D:\\LTTWEB-CNNT3\\ShopMobile\\ShopMobile\\wwwroot\\images\\blog_1.jpg",

@@ -1,0 +1,48 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model IEnumerable< Product >
+
+<div class="row mb-5 list_proudcts">
+
+    @foreach (Product p in Model)
+    {
+        <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+            <div class="block-4 text-center border">
+                <figure class="block-4-image">
+                    <a asp-controller="Home" asp-action="ShopSingle" asp-route-id="@p.ProductId"><img src="@p.images" alt="Image placeholder" class="img-fluid"></a>
+                </figure>
+                <div class="block-4-text p-4">
+                    <h3><a href="shop-single.html">@p.title</a></h3>
+                    <p class="mb-0">Finding perfect t-shirt</p>
+                    <a asp-controller="Home" asp-action="ShopSingle" asp-route-id="@p.ProductId" class=" btn btn-primary text-white mt-3 w-50 font-weight-bold mt">$ @p.price</a>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+<div class="row" data-aos="fade-up">
+    <div class="col-md-12 text-center">
+        <div class="site-block-27">
+            <ul>
+                @for (int i = 1; i <= ViewBag.TotalPage; i++)
+                {
+                    if (i == ViewBag.Page_active)
+                    {
+                        <li style="cursor: pointer" data-page="@i" class="active " id="page-navigation"><span data-page="@i">@i</span></li>
+                    }
+                    else
+                    {
+                        <li style="cursor: pointer" data-page="@i" id="page-navigation"><span data-page="@i">@i</span></li>
+                    }
+                }
+
+
+            </ul>
+        </div>
+    </div>
+</div>

@@ -17,11 +17,11 @@ namespace ShopMobile.Models
         public string email { set; get; }
 
 		[Required(ErrorMessage = "Firtname trống")]
-        [StringLength(50,MinimumLength =3)]
+        [StringLength(50,MinimumLength =2)]
         public string fristName { set; get; }
 
 		[Required(ErrorMessage = "Lastname trống")]
-		[StringLength(50, MinimumLength = 3)]
+		[StringLength(50, MinimumLength = 2)]
 		public string lastName { set; get; }
 
         [DefaultValue(null)]
@@ -30,15 +30,17 @@ namespace ShopMobile.Models
         [Required(ErrorMessage = "Password trống")]
 		public string password { set; get; }
 
-        public string? avartar { set; get; }
+        public string avartar { set; get; } 
 
-        public int RoleId { get; set; } = 2;
+        public int RoleId { get; set; }
         
 
 		public Role? Role { set; get; }
 
 
         public ICollection<Product>? Products { get; set; }
+
+        public ICollection<Invoice>? Invoices { get; set; }
 
 
     }

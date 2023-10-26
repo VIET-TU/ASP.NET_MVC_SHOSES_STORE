@@ -325,6 +325,10 @@
       "PackagePath": "staticwebassets\\images\\amdin_monkey.jpg"
     },
     {
+      "Id": "D:\\LTTWEB-CNNT3\\ShopMobile\\ShopMobile\\wwwroot\\images\\avartar_user.png",
+      "PackagePath": "staticwebassets\\images\\avartar_user.png"
+    },
+    {
       "Id": "D:\\LTTWEB-CNNT3\\ShopMobile\\ShopMobile\\wwwroot\\images\\blog_1.jpg",
       "PackagePath": "staticwebassets\\images\\blog_1.jpg"
     },

@@ -27,11 +27,11 @@ namespace ShopMobile.Models
         [Required]
         public string images { set; get; }
 
+     
+        public int? CategoryId { set; get; }
 
-        [Required]
-        public string Category { get; set; }
 
-        public int? amount_sold { set; get; } = 0;
+        public Category? Category { get; set; }
 
 		public int? UserId { get; set; }
 

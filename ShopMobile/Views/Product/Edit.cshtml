@@ -36,10 +36,6 @@
                 <input asp-for="quantity" value="@Model.quantity" type="number" class="form-control" id="Quantity" placeholder="Quantity">
             </div>
             <div class="form-group">
-                <label for="Size">Size</label>
-                <input asp-for="size" value="@Model.size" type="text" class="form-control" id="Quantity" placeholder="Size">
-            </div>
-            <div class="form-group">
                 <label for="Color">Color</label>
                 <input asp-for="color" value="@Model.color" type="text" class="form-control" id="Color" placeholder="Color">
             </div>
@@ -49,7 +45,8 @@
             </div>
             <div class="form-group">
                 <label for="Category">Category</label>
-                <input asp-for="Category" value="@Model.Category" type="text" class="form-control" id="Category" placeholder="Category">
+                <select asp-for="CategoryId" class="custom-select mr-sm-2"
+                        asp-items="@ViewBag.CategoryId"></select>
             </div>
         </div>
         <!-- /.card-body -->

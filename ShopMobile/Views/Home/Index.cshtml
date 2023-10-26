@@ -228,27 +228,7 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function () {
-
-            $.ajax({
-                url: "/auth/CheckAuthentication",
-                method: "GET",
-                success: function (data) {
-                    var user = data;
-                    if (user != null) {
-                        var url = "/images/" + user.avartar;
-                        $(".home-avartar").attr("src", url);
-                    }
-                },
-                error: function (error) {
-                    console.log("Error: " + error);
-                }
-            });
-            $(".home-avartar").click(function () {
-                $('.profile').toggleClass("profile-hidden")
-            })
-
-        });
+      
 
 
     </script>

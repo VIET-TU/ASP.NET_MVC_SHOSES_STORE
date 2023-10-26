@@ -22,6 +22,23 @@ namespace ShopMobile.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("ShopMobile.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Category", (string)null);
+                });
+
             modelBuilder.Entity("ShopMobile.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -30,14 +47,10 @@ namespace ShopMobile.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("amount_sold")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.Property<string>("color")
@@ -59,15 +72,13 @@ namespace ShopMobile.Migrations
                     b.Property<int>("quantity")
                         .HasColumnType("int");
 
-                    b.Property<string>("size")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductId");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("UserId");
 
@@ -135,9 +146,15 @@ namespace ShopMobile.Migrations
 
             modelBuilder.Entity("ShopMobile.Models.Product", b =>
                 {
+                    b.HasOne("ShopMobile.Models.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId");
+
                     b.HasOne("ShopMobile.Models.User", "User")
                         .WithMany("Products")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Category");
 
                     b.Navigation("User");
                 });
@@ -151,6 +168,11 @@ namespace ShopMobile.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("ShopMobile.Models.Category", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("ShopMobile.Models.Role", b =>

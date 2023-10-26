@@ -73,25 +73,12 @@
                                                 <span class="count">2</span>
                                             </a>
 
+                                        </li >
+                                        <li class="wrap_login" style="cursor: pointer" >
+
+                                            <li class="in_login"><a asp-action="Login" asp-controller="Auth"><span class="btn">Login</span></a></li>
                                         </li>
-                                        @if (user != null)
-                                        {
-                                            var url = "/images/" + user.avartar;
-
-                                            <li class="has-children">
-                                                <img class="home-avartar position-relative " src=@url></img>
-                                                <ul class="dropdown profile profile-hidden p-2  ">
-                                                    <li><a href="#">Profile</a></li>
-                                                    <li><a href="#">Dashboard</a></li>
-                                                    <li><a href="#">Logout</a></li>
-                                                </ul>
-                                            </li>
-
-                                        }
-                                        else
-                                        {
-                                            <li><a asp-action="Login" asp-controller="Auth"><span class="btn">Login</span></a></li>
-                                        }
+                                        
                                         <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
                                     </ul>
                                 </div>
@@ -103,17 +90,18 @@
                 <nav class="site-navigation text-right text-md-center" role="navigation">
                     <div class="container">
                         <ul class="site-menu js-clone-nav d-none d-md-block">
-                            <li class="has-children active">
+                            <li class="has-children btn_navigation_">
                                 <a asp-controller="Home" asp-action="Index">Home</a>
                             </li>
-                            <li><a asp-controller="Home" asp-action="Shop">Shop</a></li>
-                            <li class="has-children">
+                            <li class="has-children btn_navigation_Shop">
+                                <a asp-controller="Home" asp-action="Shop">Shop</a>
+                             </li>
+                            <li class="has-children btn_navigation_Blog">
                                 <a href="about.html">Blog</a>
                             </li>
-                            <li class="has-children">
-                                <a href="about.html">About</a>
+                            <li class="has-children btn_navigation_Contact">
                             </li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="contact.html btn_navigation">Contact</a></li>
 
                         </ul>
                     </div>
@@ -121,9 +109,13 @@
             </header>
         </div>
 
-     
-            
+     <!-- BODY-->
+
+     <div id="wrap-body">
+
                 @RenderBody()
+     </div>
+            
 
 
 
@@ -209,15 +201,101 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+   @* <script src="~/js/site.js" asp-append-version="true"></script>*@
 
 
 
     @await RenderSectionAsync("Scripts", required: false)
 
 
-   
 
+    <script>
+        $(document).ready(function () {
+         
+                    $.ajax({
+                         url: '/Auth/CheckAuthentication',
+                        success: function (response) {
+                            if(response){
+                                var url = "/images/" + response.avartar;
+                                 console.log(response)
+                                document.querySelector('.in_login').remove('li')
+
+                                if (response.roleId === 1) {
+                                        $('.wrap_login').html(`
+
+
+                                                                            <li class="has-children">
+                                                                        <img class="home-avartar position-relative" src="${url}"></img>
+                                                                        <ul class="dropdown profile profile-hidden p-2  ">
+                                                                            <li><a >Profile</a></li>
+                                                                                    <li><a href="/Dashboard" >Dashboard</a></li>
+                                                                            <li><a class='logout' >Logout</a></li>
+                                                                        </ul>
+                                                                    </li>
+                                                         `)
+                                } else if (response.roleId === 2) {
+                                                        $('.wrap_login').html(`
+
+
+                                                                                    <li class="has-children">
+                                                                                <img class="home-avartar position-relative" src="${url}"></img>
+                                                                                <ul class="dropdown profile profile-hidden p-2  ">
+                                                                                    <li><a >Profile</a></li>
+                                                                                    
+                                                                                    <li><a class='logout' >Logout</a></li>
+                                                                                </ul>
+                                                                            </li>
+                                                                 `)
+                                }
+
+                               
+                               
+                            
+                            } 
+
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    })
+            const url = window.document.URL.split('/');
+            const name_action = url[url.length - 1]
+             $(".active").removeClass('active')
+            $(".btn_navigation_" + name_action).addClass('active')
+
+
+            $(".wrap_login").click(function () {
+                    $('.profile').toggleClass("profile-hidden")
+                
+               
+            })
+
+            window.onload = function () {
+                $(".logout").click(function () {
+                    $.ajax({
+                        url: '/Auth/Logout',
+                        success: function (response) {
+                            if (response.success) {
+                                window.location.reload()
+                            }
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    })
+                });
+            }
+
+
+           
+
+   
+          
+
+           
+
+        })
+    </script>
 
 </body>
 

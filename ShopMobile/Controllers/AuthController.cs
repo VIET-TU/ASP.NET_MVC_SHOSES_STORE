@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using ShopMobile.Data;
 using ShopMobile.Models;
@@ -79,7 +80,8 @@ namespace BTL_WEB_MVC.Controllers
                 {
                     register.password = HandlePasswrod.hashPassword(register.password, null);
                     register.address = "";
-					register.avartar = "";
+                    register.RoleId = db.Roles.Where(r => r.RoleName == "user").FirstOrDefault().RoleId;
+                    register.avartar = "avartar_user.png";
 
 					db.Users.Add(register);
                     db.SaveChanges();
@@ -98,16 +100,30 @@ namespace BTL_WEB_MVC.Controllers
         {
             string email = HttpContext.Session.GetString("email");
 
-            User user = UserService.findOneUser(db, email);
+            User user = db.Users.Where(u => u.email == email).FirstOrDefault();
             return new JsonResult(user);
         }
 
 
-        public static string CheckAuthentication(HttpContext httpContext)
+        public static User CheckAuthentication(ShopShoseDbContext db,HttpContext httpContext)
         {
             string email = httpContext.Session.GetString("email");
+            User user = db.Users.Where(u => u.email == email).FirstOrDefault();
+            return user;
+        }
 
-            return email;
+
+        public IActionResult Logout()
+        {
+            User user = AuthController.CheckAuthentication(db,HttpContext);
+           if(user.email.Length > 0)
+            {
+                HttpContext.Session.Clear();
+                return Json(new { success = true });
+            }
+
+            return Json(new { success = false });
+
         }
 
 
