@@ -30,9 +30,9 @@ namespace ShopMobile.Models
         [Required(ErrorMessage = "Password trống")]
 		public string password { set; get; }
 
-        public string avartar { set; get; } 
+        public string? avartar { set; get; }
 
-        public int RoleId { get; set; }
+        public int? RoleId { get; set; } = 2;
         
 
 		public Role? Role { set; get; }

@@ -9,7 +9,7 @@
 <div class="bg-light py-3">
     <div class="container">
         <div class="row">
-            <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Tank Top T-Shirt</strong></div>
+            <div class="col-md-12 mb-0"><a asp-controller="Home" asp-action="Shop">Shop</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">@Model.title</strong></div>
         </div>
     </div>
 </div>
@@ -23,19 +23,19 @@
             <div class="col-md-6">
                 <div id="productId" data-id="@Model.ProductId"></div>
                 <h2 class="text-black">@Model.title</h2>
-                <h4 id="category" data-category="@Model.Category">Category: @Model.Category</h4>
+                <h4 id="category" data-category="@Model.Category">Category: @Model.Category.CategoryName</h4>
                 <p>@Model.description</p>
-                <p><strong class="text-secondary ">Quantity: @Model.quantity</strong></p>
-                <p><strong class="text-primary h4">$@Model.price</strong></p>
+                <p><strong  class="text-secondary ">Quantity: @Model.quantity</strong></p>
+                <p><strong  class="text-primary h4">$@Model.price</strong></p>
                 <div class="mb-1 d-flex">
                     <label for="option-sm" class="d-flex mr-3 mb-3">
-                        <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-sm" name="shop-sizes"></span> <span class="d-inline-block text-black">Small</span>
+                        <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input value="Small" type="radio" id="option-sm" name="shop-sizes"></span> <span class="d-inline-block text-black">Small</span>
                     </label>
                     <label for="option-md" class="d-flex mr-3 mb-3">
-                        <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-md" name="shop-sizes"></span> <span class="d-inline-block text-black">Medium</span>
+                        <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input value="Medium" type="radio" id="option-md" name="shop-sizes"></span> <span class="d-inline-block text-black">Medium</span>
                     </label>
                     <label for="option-lg" class="d-flex mr-3 mb-3">
-                        <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-lg" name="shop-sizes"></span> <span class="d-inline-block text-black">Large</span>
+                        <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input value="Large" type="radio" id="option-lg" name="shop-sizes"></span> <span class="d-inline-block text-black">Large</span>
                     </label>
                     <label for="option-xl" class="d-flex mr-3 mb-3">
                     </label>
@@ -45,14 +45,14 @@
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
                         </div>
-                        <input type="text" class="form-control text-center" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                        <input type="text" class="form-control text-center" id="product_quantity" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
                         <div class="input-group-append">
                             <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
                         </div>
                     </div>
 
                 </div>
-                <p><a href="cart.html" class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>
+                <p><a id="btn_add_to_cart" class="buy-now btn btn-sm btn-primary" style="color: white; font-weight: bold">Add To Cart</a></p>
 
             </div>
         </div>
@@ -215,7 +215,37 @@
                     console.log("Error: " + error);
                 }
             });
+
         });
+
+        $('#btn_add_to_cart').click(function() {
+            const radioButtons = document.querySelectorAll('input[name="shop-sizes"]');
+            const ProductId = $("#productId").data("id");
+            const quantity = document.querySelector("#product_quantity").value;
+            let size
+
+            radioButtons.forEach(radioButton => {
+                if (radioButton.checked) {
+                    size = radioButton.value;
+                }
+            });
+
+
+            $.ajax({
+                url: "/Invoice/addToInvoice",
+                method: "GET",
+                data: { ProductId: parseInt(ProductId), quantity: parseInt(quantity), size },
+                success: function (data) {
+                    if (data.success) {
+                        document.querySelector("#shopping_cart_count").textContent = data.cart_quantity;
+                    }
+                },
+                error: function (error) {
+                    console.log("Error: " + error);
+                }
+            });
+
+        })
 
 
     </script>

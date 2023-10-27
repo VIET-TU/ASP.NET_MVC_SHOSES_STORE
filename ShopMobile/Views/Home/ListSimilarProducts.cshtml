@@ -15,16 +15,14 @@
                 {
                 <div class="owl-item active" style="width: 346.667px; margin-right: 20px">
                     <div class="item">
-                        <div class="block-4 text-center">
+                        <div class="block-4 text-center border">
                             <figure class="block-4-image">
-                                <img src="@p.images"
-                                     alt="Image placeholder"
-                                     class="img-fluid" />
+                                <a asp-controller="Home" asp-action="ShopSingle" asp-route-id="@p.ProductId"><img src="@p.images" alt="Image placeholder" class="img-fluid"></a>
                             </figure>
                             <div class="block-4-text p-4">
-                                <h3><a href="#">Tank Top</a></h3>
+                                <h3><a href="shop-single.html">@p.title</a></h3>
                                 <p class="mb-0">Finding perfect t-shirt</p>
-                                <p class="text-primary font-weight-bold">$50</p>
+                                <a asp-controller="Home" asp-action="ShopSingle" asp-route-id="@p.ProductId" class=" btn btn-primary text-white mt-3 w-50 font-weight-bold mt">$ @p.price</a>
                             </div>
                         </div>
                     </div>
@@ -33,16 +31,14 @@
             {
                 <div class="owl-item" style="width: 346.667px; margin-right: 20px;">
                     <div class="item">
-                        <div class="block-4 text-center">
+                        <div class="block-4 text-center border">
                             <figure class="block-4-image">
-                                <img src="@p.images"
-                                     alt="Image placeholder"
-                                     class="img-fluid" />
+                                <a asp-controller="Home" asp-action="ShopSingle" asp-route-id="@p.ProductId"><img src="@p.images" alt="Image placeholder" class="img-fluid"></a>
                             </figure>
                             <div class="block-4-text p-4">
-                                <h3><a href="#">Tank Top</a></h3>
+                                <h3><a href="shop-single.html">@p.title</a></h3>
                                 <p class="mb-0">Finding perfect t-shirt</p>
-                                <p class="text-primary font-weight-bold">$50</p>
+                                <a asp-controller="Home" asp-action="ShopSingle" asp-route-id="@p.ProductId" class=" btn btn-primary text-white mt-3 w-50 font-weight-bold mt">$ @p.price</a>
                             </div>
                         </div>
                     </div>
@@ -63,7 +59,6 @@
 
 <div/>
        
-
 
 
 @*@foreach (Product p in Model)

@@ -36,6 +36,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/LTTWEB-CNNT3/ShopMobile/ShopMobile/Views/Home/ListLatestProduc.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMaXN0TGF0ZXN0UHJvZHVjLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/LTTWEB-CNNT3/ShopMobile/ShopMobile/Views/Home/ListProduct.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMaXN0UHJvZHVjdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -50,6 +54,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/LTTWEB-CNNT3/ShopMobile/ShopMobile/Views/Home/ShopSingle.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTaG9wU2luZ2xlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LTTWEB-CNNT3/ShopMobile/ShopMobile/Views/Invoice/Checkout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52b2ljZVxDaGVja291dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LTTWEB-CNNT3/ShopMobile/ShopMobile/Views/Invoice/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52b2ljZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LTTWEB-CNNT3/ShopMobile/ShopMobile/Views/Invoice/ThankYou.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52b2ljZVxUaGFua1lvdS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/LTTWEB-CNNT3/ShopMobile/ShopMobile/Views/Product/Create.cshtml]

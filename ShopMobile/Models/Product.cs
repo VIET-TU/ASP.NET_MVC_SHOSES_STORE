@@ -37,7 +37,19 @@ namespace ShopMobile.Models
 
         public User? User { get; set; }
 
+        public ICollection<Invoice_Products> Invoice_Products { get; set; }
 
 
+
+    }
+
+    public class ProductOrder
+    {
+        [Required]
+        public int ProductId;
+        [Required]
+        public int quantity;
+        [Required]
+        public string size;
     }
 }

@@ -68,9 +68,9 @@
                                 <div class="site-top-icons ">
                                     <ul class="">
                                         <li class="mr-3">
-                                            <a href="cart.html" class="site-cart">
+                                            <a asp-controller="Invoice" asp-action="Index" class="site-cart">
                                                 <span class="icon icon-shopping_cart"></span>
-                                                <span class="count">2</span>
+                                                <span id="shopping_cart_count" class="count">0</span>
                                             </a>
 
                                         </li >
@@ -211,56 +211,56 @@
 
     <script>
         $(document).ready(function () {
-         
-                    $.ajax({
-                         url: '/Auth/CheckAuthentication',
-                        success: function (response) {
-                            if(response){
-                                var url = "/images/" + response.avartar;
-                                 console.log(response)
-                                document.querySelector('.in_login').remove('li')
 
-                                if (response.roleId === 1) {
-                                        $('.wrap_login').html(`
-
-
-                                                                            <li class="has-children">
-                                                                        <img class="home-avartar position-relative" src="${url}"></img>
-                                                                        <ul class="dropdown profile profile-hidden p-2  ">
-                                                                            <li><a >Profile</a></li>
-                                                                                    <li><a href="/Dashboard" >Dashboard</a></li>
-                                                                            <li><a class='logout' >Logout</a></li>
-                                                                        </ul>
-                                                                    </li>
-                                                         `)
-                                } else if (response.roleId === 2) {
-                                                        $('.wrap_login').html(`
+            $.ajax({
+                url: '/Auth/CheckAuthentication',
+                success: function (response) {
+                    if (response) {
+                        var url = "/images/" + response.avartar;
+                        document.querySelector('.in_login').remove('li')
+                        if (response.roleId === 1) {
+                            $('.wrap_login').html(`
 
 
                                                                                     <li class="has-children">
                                                                                 <img class="home-avartar position-relative" src="${url}"></img>
                                                                                 <ul class="dropdown profile profile-hidden p-2  ">
                                                                                     <li><a >Profile</a></li>
-                                                                                    
+                                                                                            <li><a href="/Dashboard" >Dashboard</a></li>
                                                                                     <li><a class='logout' >Logout</a></li>
                                                                                 </ul>
                                                                             </li>
                                                                  `)
-                                }
+                        } else if (response.roleId === 2) {
+                            $('.wrap_login').html(`
 
-                               
-                               
-                            
-                            } 
 
-                        },
-                        error: function (e) {
-                            console.log(e);
+                                                                                            <li class="has-children">
+                                                                                        <img class="home-avartar position-relative" src="${url}"></img>
+                                                                                        <ul class="dropdown profile profile-hidden p-2  ">
+                                                                                            <li><a >Profile</a></li>
+
+                                                                                            <li><a class='logout' >Logout</a></li>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                         `)
                         }
-                    })
+
+
+
+
+                    }
+
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            })
+
+                    
+
             const url = window.document.URL.split('/');
             const name_action = url[url.length - 1]
-             $(".active").removeClass('active')
             $(".btn_navigation_" + name_action).addClass('active')
 
 
@@ -288,10 +288,6 @@
 
 
            
-
-   
-          
-
            
 
         })

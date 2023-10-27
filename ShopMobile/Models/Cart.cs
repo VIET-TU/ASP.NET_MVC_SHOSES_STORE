@@ -16,8 +16,6 @@ namespace ShopMobile.Models
 
         public bool Status { get; set; }
 
-        public int? Cart_count_Product;
-
-        public ICollection<Product>? Cart_Products { get; set; }
+        public ICollection<Invoice_Products>? Invoice_Products { get; set; }
     }
 }

@@ -39,6 +39,61 @@ namespace ShopMobile.Migrations
                     b.ToTable("Category", (string)null);
                 });
 
+            modelBuilder.Entity("ShopMobile.Models.Invoice", b =>
+                {
+                    b.Property<int>("InvoiceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InvoiceId"), 1L, 1);
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("InvoiceId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Invoice", (string)null);
+                });
+
+            modelBuilder.Entity("ShopMobile.Models.Invoice_Products", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("InvoiceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("size")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("totalPrice")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Invoice_Products", (string)null);
+                });
+
             modelBuilder.Entity("ShopMobile.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -117,6 +172,7 @@ namespace ShopMobile.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("avartar")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("email")
@@ -142,6 +198,36 @@ namespace ShopMobile.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("User", (string)null);
+                });
+
+            modelBuilder.Entity("ShopMobile.Models.Invoice", b =>
+                {
+                    b.HasOne("ShopMobile.Models.User", "User")
+                        .WithMany("Invoices")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ShopMobile.Models.Invoice_Products", b =>
+                {
+                    b.HasOne("ShopMobile.Models.Invoice", "Invoice")
+                        .WithMany("Invoice_Products")
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ShopMobile.Models.Product", "Product")
+                        .WithMany("Invoice_Products")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Invoice");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ShopMobile.Models.Product", b =>
@@ -175,6 +261,16 @@ namespace ShopMobile.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("ShopMobile.Models.Invoice", b =>
+                {
+                    b.Navigation("Invoice_Products");
+                });
+
+            modelBuilder.Entity("ShopMobile.Models.Product", b =>
+                {
+                    b.Navigation("Invoice_Products");
+                });
+
             modelBuilder.Entity("ShopMobile.Models.Role", b =>
                 {
                     b.Navigation("Users");
@@ -182,6 +278,8 @@ namespace ShopMobile.Migrations
 
             modelBuilder.Entity("ShopMobile.Models.User", b =>
                 {
+                    b.Navigation("Invoices");
+
                     b.Navigation("Products");
                 });
 #pragma warning restore 612, 618

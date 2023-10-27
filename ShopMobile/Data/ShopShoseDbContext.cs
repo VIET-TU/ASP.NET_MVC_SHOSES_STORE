@@ -12,7 +12,10 @@ namespace ShopMobile.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Category> Categories { get; set; } 
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<Invoice_Products> Invoice_Products { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -21,8 +24,8 @@ namespace ShopMobile.Data
             modelBuilder.Entity<Role>().ToTable(nameof(Role));
             modelBuilder.Entity<Product>().ToTable(nameof(Product));
             modelBuilder.Entity<Category>().ToTable(nameof(Category));
-
-
+            modelBuilder.Entity<Invoice>().ToTable(nameof(Invoice));
+            modelBuilder.Entity<Invoice_Products>().ToTable(nameof(Invoice_Products));
 
         }
     }

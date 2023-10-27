@@ -13,6 +13,9 @@ namespace ShopMobile.Controllers
 {
     public class HomeController : Controller
     {
+        public static int limit = 6;
+        public static int lst_product_limit = 6;
+
         private ShopShoseDbContext db;
 
         public HomeController(ShopShoseDbContext db)
@@ -21,11 +24,19 @@ namespace ShopMobile.Controllers
         }
         public IActionResult Index()
         {
+            IEnumerable<Product> products = db.Products.OrderByDescending(p => p.ProductId).Take(lst_product_limit).ToList();
+            ViewBag.TotalProduct = db.Products.Count();
+            return View(products);
+        }
 
-
-            return View();
-
-
+        public IActionResult GetLatestProductWithPanigation(int cursorId)
+        {
+            IEnumerable<Product> products = db.Products
+                                         .Where(p => p.ProductId <= cursorId)
+                                         .OrderByDescending(p => p.ProductId)
+                                         .Take(lst_product_limit)
+                                         .ToList();
+            return PartialView("ListLatestProduc", products);
         }
 
         public IActionResult Shop(int page = 1)
@@ -46,7 +57,6 @@ namespace ShopMobile.Controllers
                 categoryDataList.Add(categoryData);
             }
 
-            int limit = 6;
             int offset = (page - 1) * limit;
             int count = products.Count();
             int totalPage = (int)Math.Ceiling((decimal)count / limit);
@@ -55,6 +65,7 @@ namespace ShopMobile.Controllers
             ViewBag.CategoryDataList = categoryDataList;
             ViewBag.TotalPage = totalPage;
             ViewBag.TotoalCountProduct = count;
+            ViewBag.Page_active = page;
             return View(products);
         }
 
@@ -70,7 +81,7 @@ namespace ShopMobile.Controllers
             products = db.Products.Where(p => p.CategoryId == categoryId).ToList();
             }
 
-            int limit = 6;
+    
             int offset = (page - 1) * limit;
             int count = products.Count();
             int totalPage = (int)Math.Ceiling((decimal)count / limit);
@@ -87,16 +98,18 @@ namespace ShopMobile.Controllers
 
         public IActionResult ShopSingle(int id)
         {
-            Product product = db.Products.Where(p => p.ProductId == id).FirstOrDefault();   
+            Product product = db.Products.Where(p => p.ProductId == id).Include(p => p.Category).FirstOrDefault();   
             return View(product);
         }
 
         public IActionResult ListSimilarProduct(int productId,string category)
         {
-            IEnumerable<Product> products = db.Products.Where(p =>  p.ProductId != productId).ToList();
+            IEnumerable<Product> products = db.Products.Where(p =>  p.ProductId != productId ).OrderBy(r => Guid.NewGuid()).Take(6).ToList();
 
             return PartialView("ListSimilarProducts", products);
         }
+
+
 
 
     }

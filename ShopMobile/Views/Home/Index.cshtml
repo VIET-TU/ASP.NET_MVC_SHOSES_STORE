@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/PageLayout.cshtml";
 }
 
-
+@model IEnumerable<Product>
 
 <div class="site-blocks-cover" style="background-image: url(/images/hero_1.jpg);" data-aos="fade">
     <div class="container">
@@ -61,163 +61,33 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-7 site-section-heading text-center pt-4">
-                <h2>Best seller</h2>
+                <h2>Latest product</h2>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div  class="owl-carousel grid-container">
-                    <div class="item grid-item border-8">
-                        <div class="block-4 text-center">
-                            <figure class="block-4-image">
-                                <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
-                            </figure>
-                            <div class="block-4-text p-4">
-                                <h3><a href="#">Tank Top</a></h3>
-                                <p class="mb-0">Finding perfect t-shirt</p>
-                                <a class=" btn btn-primary text-white mt-3 w-50 font-weight-bold mt">$50</a>
+                <div id="wrap_product" class="owl-carousel grid-container ">
+                        @foreach (Product p in Model)
+                        {
+                            <div id="product" product-id="@p.ProductId" class="item grid-item border-8">
+                                <div class="block-4 text-center">
+                                    <figure class="block-4-image">
+                                        <img src="@p.images" alt="Image placeholder" class="img-fluid">
+                                    </figure>
+                                    <div class="block-4-text p-4">
+                                        <h3><a href="#">@p.title</a></h3>
+                                        <a class=" btn btn-primary text-white mt-3 w-50 font-weight-bold mt">@p.price</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        }
+                    
 
-                      <div class="item grid-item border-8">
-                        <div class="block-4 text-center">
-                            <figure class="block-4-image">
-                                <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
-                            </figure>
-                            <div class="block-4-text p-4">
-                                <h3><a href="#">Tank Top</a></h3>
-                                <p class="mb-0">Finding perfect t-shirt</p>
-                                <a class=" btn btn-primary text-white mt-3 w-50 font-weight-bold mt">$50</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="item grid-item border-8">
-                        <div class="block-4 text-center">
-                            <figure class="block-4-image">
-                                <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
-                            </figure>
-                            <div class="block-4-text p-4">
-                                <h3><a href="#">Tank Top</a></h3>
-                                <p class="mb-0">Finding perfect t-shirt</p>
-                                <a class=" btn btn-primary text-white mt-3 w-50 font-weight-bold mt">$50</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="item grid-item border-8">
-                        <div class="block-4 text-center">
-                            <figure class="block-4-image">
-                                <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
-                            </figure>
-                            <div class="block-4-text p-4">
-                                <h3><a href="#">Tank Top</a></h3>
-                                <p class="mb-0">Finding perfect t-shirt</p>
-                                <a class=" btn btn-primary text-white mt-3 w-50 font-weight-bold mt">$50</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="item grid-item border-8">
-                        <div class="block-4 text-center">
-                            <figure class="block-4-image">
-                                <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
-                            </figure>
-                            <div class="block-4-text p-4">
-                                <h3><a href="#">Tank Top</a></h3>
-                                <p class="mb-0">Finding perfect t-shirt</p>
-                                <a class=" btn btn-primary text-white mt-3 w-50 font-weight-bold mt">$50</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="item grid-item border-8">
-                        <div class="block-4 text-center">
-                            <figure class="block-4-image">
-                                <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
-                            </figure>
-                            <div class="block-4-text p-4">
-                                <h3><a href="#">Tank Top</a></h3>
-                                <p class="mb-0">Finding perfect t-shirt</p>
-                                <a class=" btn btn-primary text-white mt-3 w-50 font-weight-bold mt">$50</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="item grid-item border-8">
-                        <div class="block-4 text-center">
-                            <figure class="block-4-image">
-                                <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
-                            </figure>
-                            <div class="block-4-text p-4">
-                                <h3><a href="#">Tank Top</a></h3>
-                                <p class="mb-0">Finding perfect t-shirt</p>
-                                <a class=" btn btn-primary text-white mt-3 w-50 font-weight-bold mt">$50</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="item grid-item border-8">
-                        <div class="block-4 text-center">
-                            <figure class="block-4-image">
-                                <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
-                            </figure>
-                            <div class="block-4-text p-4">
-                                <h3><a href="#">Tank Top</a></h3>
-                                <p class="mb-0">Finding perfect t-shirt</p>
-                                <a class=" btn btn-primary text-white mt-3 w-50 font-weight-bold mt">$50</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="item grid-item border-8">
-                        <div class="block-4 text-center">
-                            <figure class="block-4-image">
-                                <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
-                            </figure>
-                            <div class="block-4-text p-4">
-                                <h3><a href="#">Tank Top</a></h3>
-                                <p class="mb-0">Finding perfect t-shirt</p>
-                                <a class=" btn btn-primary text-white mt-3 w-50 font-weight-bold mt">$50</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="item grid-item border-8">
-                        <div class="block-4 text-center">
-                            <figure class="block-4-image">
-                                <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
-                            </figure>
-                            <div class="block-4-text p-4">
-                                <h3><a href="#">Tank Top</a></h3>
-                                <p class="mb-0">Finding perfect t-shirt</p>
-                                <a class=" btn btn-primary text-white mt-3 w-50 font-weight-bold mt">$50</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="item grid-item border-8">
-                        <div class="block-4 text-center">
-                            <figure class="block-4-image">
-                                <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
-                            </figure>
-                            <div class="block-4-text p-4">
-                                <h3><a href="#">Tank Top</a></h3>
-                                <p class="mb-0">Finding perfect t-shirt</p>
-                                <a class=" btn btn-primary text-white mt-3 w-50 font-weight-bold mt">$50</a>
-                            </div>
-                        </div>
-                    </div>
-
-
+                    
                  
+                </div>
+                <div style="display: flex; justify-content: center; margin-top: 20px">
+                    <button id="btn_load_more" class="btn btn-primary">Load More</button>
                 </div>
             </div>
         </div>
@@ -228,8 +98,33 @@
 
 @section Scripts {
     <script>
-      
 
+        $(document).ready(function () {
+
+           
+
+
+
+            $("#btn_load_more").click(function () {
+                const products = document.querySelectorAll("#product");
+                const lastProduct = products[products.length - 1];
+                const last_productId = lastProduct.getAttribute("product-id");
+
+                $.ajax({
+                    url: "/Home/GetLatestProductWithPanigation",
+                    method: "GET",
+                    data: { cursorId: parseInt(last_productId) },
+                    success: function (res) {
+                        if (res) {
+                            $("#wrap_product").after(res)
+                        }
+                    },
+                    error: function (error) {
+                        console.log("Error: " + error);
+                    }
+                });
+            })
+        })
 
     </script>
         }

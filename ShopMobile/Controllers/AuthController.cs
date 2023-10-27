@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
+using ShopMobile.Controllers;
 using ShopMobile.Data;
 using ShopMobile.Models;
 using ShopMobile.Services;
 using ShopMobile.utils;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices;
+using System.Text.Json.Nodes;
 
 namespace BTL_WEB_MVC.Controllers
 {
@@ -21,7 +23,11 @@ namespace BTL_WEB_MVC.Controllers
 
         public IActionResult Login()
         {
-
+            User user = AuthController.CheckAuthentication(db, HttpContext);
+            if (user != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -30,11 +36,13 @@ namespace BTL_WEB_MVC.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult Login(Login login)
 		{
+          
+
             if (ModelState.IsValid)
             {
 				User exitsUser = db.Users.Where(i => i.email.Equals(login.email.Trim())).FirstOrDefault();
 
-				if (User != null)
+				if (exitsUser != null)
 				{
 					if(HandlePasswrod.verifyPassword(exitsUser.password, login.password))
 					{
@@ -57,6 +65,11 @@ namespace BTL_WEB_MVC.Controllers
 
 		public IActionResult Register()
         {
+            User user = AuthController.CheckAuthentication(db, HttpContext);
+            if (user != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -64,15 +77,16 @@ namespace BTL_WEB_MVC.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult Register(Register register)
 		{
+          
 
-			if (ModelState.IsValid) { 
+            if (ModelState.IsValid) { 
 
                 User exitsUser = db.Users.Where(i => i.email.Equals(register.email.Trim())).FirstOrDefault();
 
                 if(exitsUser != null)
                 {
-					ModelState.AddModelError("email", "Email đăng ký đã tồn tại");
-					TempData["success"] = "Register successfully";
+					ModelState.AddModelError("email", "Email register is exits");
+					TempData["error"] = "Email register is exits";
 					return View("Register");
 				}
 
@@ -80,16 +94,16 @@ namespace BTL_WEB_MVC.Controllers
                 {
                     register.password = HandlePasswrod.hashPassword(register.password, null);
                     register.address = "";
-                    register.RoleId = db.Roles.Where(r => r.RoleName == "user").FirstOrDefault().RoleId;
+                    register.RoleId = db.Roles.Where(r => r.RoleName == "user").FirstOrDefault().RoleId; // 2
                     register.avartar = "avartar_user.png";
 
 					db.Users.Add(register);
                     db.SaveChanges();
-					TempData["false"] = "Register successfully";
+					TempData["success"] = "Register successfully";
 					return RedirectToAction("Login");   
 				}
             }
-			TempData["false"] = "Register false";
+			TempData["error"] = "Register false";
 			return View("Register");
 
 
@@ -101,6 +115,15 @@ namespace BTL_WEB_MVC.Controllers
             string email = HttpContext.Session.GetString("email");
 
             User user = db.Users.Where(u => u.email == email).FirstOrDefault();
+            int totalQuantity = 0;
+         /*   if (user != null)
+            {
+
+                totalQuantity = InvoiceController.CardTotalQuantity(db, user.UserId);
+            }
+*/
+
+
             return new JsonResult(user);
         }
 
