@@ -14,7 +14,7 @@ namespace ShopMobile.Controllers
     public class HomeController : Controller
     {
         public static int limit = 6;
-        public static int lst_product_limit = 6;
+
 
         private ShopShoseDbContext db;
 
@@ -24,19 +24,28 @@ namespace ShopMobile.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<Product> products = db.Products.OrderByDescending(p => p.ProductId).Take(lst_product_limit).ToList();
-            ViewBag.TotalProduct = db.Products.Count();
+            IEnumerable<Product> products = db.Products.OrderByDescending(p => p.ProductId).Take(limit).ToList();
             return View(products);
         }
 
-        public IActionResult GetLatestProductWithPanigation(int cursorId)
+        public IActionResult GetLatestProductWithPanigation(int cursorId, int totalProductCurrent)
         {
-            IEnumerable<Product> products = db.Products
-                                         .Where(p => p.ProductId <= cursorId)
+            int totalProduct = db.Products.Count();
+            if (totalProductCurrent < totalProduct)
+            {
+                IEnumerable<Product> products = db.Products
                                          .OrderByDescending(p => p.ProductId)
-                                         .Take(lst_product_limit)
+                                         .Where(p => p.ProductId <= cursorId)
+                                         .Take(limit)
                                          .ToList();
-            return PartialView("ListLatestProduc", products);
+
+                return PartialView("ListLatestProduc", products);
+            }
+
+
+
+            return Json(new { HideLoadMore = true });
+            
         }
 
         public IActionResult Shop(int page = 1)

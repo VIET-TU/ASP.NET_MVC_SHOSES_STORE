@@ -28,8 +28,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/LTTWEB-CNNT3/ShopMobile/ShopMobile/Views/Dashboard/CreateUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXENyZWF0ZVVzZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/LTTWEB-CNNT3/ShopMobile/ShopMobile/Views/Dashboard/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LTTWEB-CNNT3/ShopMobile/ShopMobile/Views/Dashboard/TableUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXFRhYmxlVXNlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LTTWEB-CNNT3/ShopMobile/ShopMobile/Views/Dashboard/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXFVwZGF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LTTWEB-CNNT3/ShopMobile/ShopMobile/Views/Dashboard/UserManagement.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXFVzZXJNYW5hZ2VtZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/LTTWEB-CNNT3/ShopMobile/ShopMobile/Views/Home/Index.cshtml]

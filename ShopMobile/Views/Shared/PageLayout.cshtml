@@ -215,7 +215,9 @@
             $.ajax({
                 url: '/Auth/CheckAuthentication',
                 success: function (response) {
+                    console.log(response)
                     if (response) {
+                        const userId = response.userId;
                         var url = "/images/" + response.avartar;
                         document.querySelector('.in_login').remove('li')
                         if (response.roleId === 1) {
@@ -226,7 +228,7 @@
                                                                                 <img class="home-avartar position-relative" src="${url}"></img>
                                                                                 <ul class="dropdown profile profile-hidden p-2  ">
                                                                                     <li><a >Profile</a></li>
-                                                                                            <li><a href="/Dashboard" >Dashboard</a></li>
+                                                                                               <li><a target="_blank" href="/Dashboard" >Dashboard</a></li>
                                                                                     <li><a class='logout' >Logout</a></li>
                                                                                 </ul>
                                                                             </li>
@@ -247,7 +249,19 @@
                         }
 
 
-
+                        $.ajax({
+                            url: '/Invoice/CardTotalQuantity',
+                            data: { userId },
+                            success: function (response) {
+                                console.log(response)
+                                if (response) {
+                                    $("#shopping_cart_count").text(response.totalQuantity)
+                                }
+                            },
+                            error: function (e) {
+                                console.log(e);
+                            }
+                        })
 
                     }
 
@@ -256,6 +270,8 @@
                     console.log(e);
                 }
             })
+
+          
 
                     
 

@@ -236,9 +236,9 @@
                 method: "GET",
                 data: { ProductId: parseInt(ProductId), quantity: parseInt(quantity), size },
                 success: function (data) {
-                    if (data.success) {
-                        document.querySelector("#shopping_cart_count").textContent = data.cart_quantity;
-                    }
+                   
+                       window.location.reload();
+                   
                 },
                 error: function (error) {
                     console.log("Error: " + error);

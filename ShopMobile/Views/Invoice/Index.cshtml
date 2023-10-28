@@ -24,6 +24,8 @@
                             <tr>
                                 <th class="product-thumbnail">Image</th>
                                 <th class="product-name">Product</th>
+                                <th class="product-name">Category</th>
+                                <th class="product-name">Size</th>
                                 <th class="product-price">Price</th>
                                 <th class="product-quantity">Quantity</th>
                                 <th class="product-total">Total</th>
@@ -33,6 +35,9 @@
                         <tbody>
                             @foreach(Invoice_Products ip in Model)
                             {
+                            <div id="invoiceId" data-invoiceid="@ip.InvoiceId" style="visibility: hidden" ></div>
+                                <div id="productId" data-productid="@ip.InvoiceId" style="visibility: hidden"></div>
+
                                     <div style="visibility: hidden" id="id_invoice_product" data-id="@ip.Id"></div>
                                 <tr>
                                     <td class="product-thumbnail">
@@ -41,7 +46,16 @@
                                     <td class="product-name">
                                         <h2 class="h5 text-black">@ip.Product.title</h2>
                                     </td>
-                                    <td>@ip.Product.price</td>
+                                    <td class="product-name">
+                                        <h2 class="h5 text-black">@ip.Product.Category.CategoryName</h2>
+                                    </td>
+                                    <td class="product-name">
+                                        <h2 class="h5 text-black">@ip.size</h2>
+                                    </td>
+                                    <td class="product-name">
+                                        <h2 class="h5 text-black">@ip.Product.price</h2>
+                                    </td>
+                          
                                     <td>
                                         <div class="input-group mb-3" style="max-width: 120px;">
                                             <div class="input-group-prepend">
@@ -54,7 +68,11 @@
                                         </div>
 
                                     </td>
-                                    <td>@ip.totalPrice</td>
+                                    <td class="product-name">
+                                        <h2 class="h5 text-black">
+                                    @ip.totalPrice</h2>
+                                    </td>
+                                    
                                     <td><a id="btn_delete" class="btn btn-primary btn-sm">X</a></td>
                                 </tr>
                             }
@@ -71,10 +89,10 @@
             <div class="col-md-6">
                 <div class="row mb-5">
                     <div class="col-md-6 mb-3 mb-md-0">
-                        <button class="btn btn-primary btn-sm btn-block">Update Cart</button>
+                        <button id="btn_updateCart" class="btn btn-primary btn-sm btn-block">Update Cart</button>
                     </div>
                     <div class="col-md-6">
-                        <button class="btn btn-outline-primary btn-sm btn-block">Continue Shopping</button>
+                        <a asp-controller="Home" asp-action="Shop" class="btn btn-outline-primary btn-sm btn-block">Continue Shopping</a>
                     </div>
                 </div>
                
@@ -125,6 +143,26 @@
                     url: '/Invoice/DeleteItemInvoiceProduct',
                     method: 'POST',
                     data: {id: parseInt(id)},
+                    success: function (response) {
+                        if (response.success) {
+                            window.location.reload();
+                        }
+
+                    },
+                    error: function (e) {
+                        console.log(e);
+                    }
+                })
+
+            })
+
+            $("#btn_updateCart").click(function () {
+                const id = $("#id_invoice_product").data("id");
+                alert("hell world")
+                $.ajax({
+                    url: '/Invoice/DeleteItemInvoiceProduct',
+                    method: 'POST',
+                    data: { id: parseInt(id) },
                     success: function (response) {
                         if (response.success) {
                             window.location.reload();

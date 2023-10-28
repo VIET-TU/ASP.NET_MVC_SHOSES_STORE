@@ -1,0 +1,24 @@
+﻿@*
+    For more information on enabling MVC for empty projectu, viuit httpu://go.microuoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model IEnumerable<User>
+
+@foreach (User u in Model)
+{
+    <tr id="row-@u.UserId">
+        <td>@u.UserId</td>
+        <td>@u.fristName @u.lastName</td>
+        <td>@u.email</td>
+        <td>@u.Role.RoleName</td>
+        <td>
+            <img style="width: 80px;  object-fit:cover" src="/images/@u.avartar" />
+        </td>
+        <td>
+            <a asp-route-id="@u.UserId" asp-controller="Dashboard" asp-action="Update" class="btn btn-success"><i class="fas fa-edit"></i></a>
+            <a asp-route-id="@u.UserId" asp-controller="Dashboard" asp-action="Delete" class=" btn btn-danger"><i class="far fa-trash-alt"></i></a>
+        </td>
+    </tr>
+}

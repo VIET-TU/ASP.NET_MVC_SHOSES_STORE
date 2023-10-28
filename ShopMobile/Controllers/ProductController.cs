@@ -13,6 +13,7 @@ namespace ShopMobile.Controllers
     public class ProductController : Controller
     {
         private ShopShoseDbContext db;
+        public static int limit { get; } = 5;
 
         public ProductController(ShopShoseDbContext db)
         {
@@ -21,7 +22,7 @@ namespace ShopMobile.Controllers
 
         public IActionResult Index(int page = 1)
         {
-            int limit = 5;
+
             int count = db.Products.Count();
             int totalPage = (int)Math.Ceiling((decimal)count / limit);
             
@@ -33,7 +34,7 @@ namespace ShopMobile.Controllers
 
         public IActionResult GetAllPanigationProduct(int page = 1)
         {
-            int limit = 5;
+     
             int offset = (page - 1) * limit;
             IEnumerable<Product> products = db.Products.OrderBy(p => p.ProductId).Skip(offset).Take(limit).ToList();
             return PartialView("ListProductTable", products);
@@ -74,6 +75,8 @@ namespace ShopMobile.Controllers
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName");
             return View("Create");
         }
+
+       
 
 
         public IActionResult Edit(int id) 

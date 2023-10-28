@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+@model User
+
+<div class=" card card-primary">
+    <div class="box ml-2 mt-4">
+        <h3>Create new user</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form asp-controller="Dashboard" asp-action="Update" method="post">
+        <div class="card-body">
+             <input asp-for="UserId" style="display: none" />
+            <div class="form-group">
+                <label for="title">Frist name</label>
+                <input asp-for="fristName" type="text" value="@Model.fristName" class="form-control" id="title">
+            </div>
+
+            <div class="form-group">
+                <label for="title">Last name</label>
+                <input asp-for="lastName" value="@Model.lastName" type="text" class="form-control" id="title">
+            </div>
+
+            <div class="form-group">
+                <label for="title">Email</label>
+                <input asp-for="email" value="@Model.email" type="text" class="form-control" id="title">
+            </div>
+
+            <div class="form-group">
+                <label for="Dectiption">Address</label>
+                <textarea asp-for="address" value="@Model.address" rows="4" cols="50" class="form-control" id="Dectiption"> </textarea>
+            </div>
+
+
+            <div class="form-group " style="display: none">
+                <label for="Dectiption">Address</label>
+                <textarea asp-for="avartar" value="@Model.avartar" rows="4" cols="50" class="form-control" id="Dectiption"> </textarea>
+            </div>
+
+            <div class="form-group" style="display: none">
+                <label for="Price">Password</label>
+                <input asp-for="password" value="@Model.password" type="password" class="form-control" id="Price">
+            </div>
+
+            <div class="form-group">
+                <label for="Category">Role</label>
+                <select asp-for="RoleId" class="custom-select mr-sm-2"
+                        asp-items="@ViewBag.Role">
+                    </select>
+                        
+            </div>
+
+        </div>
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+
+
+

@@ -1,0 +1,168 @@
+﻿
+@{
+    ViewData["Title"] = "UserManagement";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+
+
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>User Management</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <a asp-controller="Dashboard" asp-action="CreateUser" type="button" class="btn btn-primary">Create User</a>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="content">
+    <div class="card">
+
+        <!-- /.card-header -->
+        <div class="card-body">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title text-center">User list</h3>
+
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0" id="wrap_table">
+                        <table class="table table-striped table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Avartar</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="wrap_table_body">
+
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-fotter mt-4 ">
+                        <nav aria-label="Page navigation example navigation_bar" style="cursor: pointer">
+
+                            @if (ViewBag.TotalPage > 0)
+                            {
+                                <ul class="pagination justify-content-center">
+
+
+
+                                    @for (int p = 1; p <= ViewBag.TotalPage; p++)
+                                    {
+                                        <li class="page-item   @(p == ViewBag.CurrentPage ? "active" : "")" data-page="@p">
+                                            <a class="page-link" date-page="@p">@p</a>
+                                        </li>
+                                    }
+                                  
+
+                                </ul>
+                            }
+
+                        </nav>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+                                @section Scripts {
+    <script>
+       $(document).ready(function() {
+            $('body').on('click', '.btnDelete', function() {
+                const id = $(this).data("id")
+                var conf = confirm("Do you want delete this product ?")
+                if(conf === true) {
+                    alert(id)
+                    $.ajax({
+                        url: '/Product/Delete',
+                        type: 'POST',
+                        data: {id: id},
+                        success: function(response) {
+                            if (response.success) {
+                                $('#row-' + id).remove();
+                            } 
+                        } ,
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    })
+                }
+            })
+            //////
+
+            const page = $('.page-item .active').data("page") || null // 1
+
+
+            
+            $.ajax({
+                url: "/Dashboard/GetAllPanigationUser",
+                method: "GET",
+                data: { page },
+                success: function (data) {
+                    console.log(data)
+                    if (data != null) {
+                        $('#wrap_table_body').html(data)
+                    }
+                },
+                error: function (error) {
+                    console.log("Error: " + error);
+                }
+            });
+
+
+            // event clikck page
+
+            $('body').on('click', '.page-item', function () {
+                const e1 = $(this)
+                const e2 = $('.active');
+                e2.removeClass('active')
+                e1.addClass('active')
+                const page = e1.data("page")
+
+                $.ajax({
+                    url: "/Dashboard/GetAllPanigationUser",
+                    method: "GET",
+                    data: { page },
+                    success: function (data) {
+                        console.log(data)
+                        if (data != null) {
+                            $('#wrap_table_body').html(data)
+                        }
+                    },
+                    error: function (error) {
+                        console.log("Error: " + error);
+                    }
+                });
+                    
+             })
+       })
+    </script>
+
+
+ }

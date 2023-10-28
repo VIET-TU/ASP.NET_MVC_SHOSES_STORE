@@ -33,7 +33,7 @@ namespace ShopMobile.Controllers
                 latestInvoice = this.CreateNewInvoice(user.UserId);
             }
 
-            IEnumerable<Invoice_Products> list_product_invoice = db.Invoice_Products.Where(i => i.InvoiceId == latestInvoice.InvoiceId).Include(i => i.Product).ToList();
+            IEnumerable<Invoice_Products> list_product_invoice = db.Invoice_Products.Where(i => i.InvoiceId == latestInvoice.InvoiceId).Include(i => i.Product).Include(p => p.Product.Category).ToList();
             int totalPrice = 0;
             foreach (var ip in list_product_invoice)
             {
@@ -69,6 +69,7 @@ namespace ShopMobile.Controllers
                 Product info_product = db.Products.Where(p => p.ProductId == ProductId).FirstOrDefault();
                 if (info_product == null)
                 {
+                    TempData["error"] = "Add a product to cart false";
                     return NotFound();
                 }
 
@@ -109,24 +110,25 @@ namespace ShopMobile.Controllers
                 }
 
 
-                int totalQuantity = db.Invoice_Products
-                                    .Where(i => i.InvoiceId == latestInvoice.InvoiceId)
-                                    .Sum(q => q.quantity);
-
+               
 
 
 
                 db.SaveChanges();
 
-                return Json(new { success = true, message = "Add to invoice success", cart_quantity = totalQuantity });
+                TempData["success"] = "Add a product to cart successfylly";
+
+                return Json(new { success = true });
             }
 
-            return Json(new { success = false, message = "Add to invoice false" });
+            TempData["error"] = "Add a product to cart false";  
+            return Json(new { success = false });
 
         }
 
-        public static int CardTotalQuantity(ShopShoseDbContext db, int userId)
+        public IActionResult CardTotalQuantity(int userId)
         {
+
             Invoice latestInvoice = db.Invoices
                                .Where(c => c.UserId == userId && !c.Status)
                                .FirstOrDefault();
@@ -141,8 +143,18 @@ namespace ShopMobile.Controllers
 
 
 
-            return totalQuantity;
+            return Json(new { totalQuantity }); ;
         }
+
+
+        public IActionResult UpdateQuantityInvoice_Product(int invoiceId,int productId,string size,int quantity)
+        {
+
+             db.Invoice_Products.Where(i => i.InvoiceId == invoiceId && i.ProductId == productId && i.size.Equals(size)).FirstOrDefault();
+                        
+            return null;
+        }
+
 
         [HttpPost]
         public IActionResult DeleteItemInvoiceProduct(int id)
@@ -176,6 +188,32 @@ namespace ShopMobile.Controllers
         {
             if(invoiceID != null) { 
                 Invoice invoice = db.Invoices.Where(i => i.InvoiceId == invoiceID).FirstOrDefault();
+
+                var productQuantities = db.Invoice_Products
+                                        .Where(i => i.InvoiceId == invoice.InvoiceId)
+                                        .GroupBy(i => i.ProductId)
+                                        .Select(g => new
+                                        {
+                                            ProductId = g.Key,
+                                            TotalQuantity = g.Sum(i => i.quantity)
+                                        })
+                                        .ToList();
+
+                foreach (var x in productQuantities)
+                {
+                    Product product = db.Products.Where(p => p.ProductId == x.ProductId).FirstOrDefault();
+                    if (product.quantity < x.TotalQuantity)
+                    {
+                        TempData["error"] = "so luong mua " + product.title + " vuot qua so luong ton kho";
+                        return View("Checkout");
+                    } else
+                    {
+                        product.quantity -= x.TotalQuantity;
+                        db.SaveChanges();
+                    }
+                }
+
+
                 if (invoice != null)
                 {
                     invoice.Status = true;

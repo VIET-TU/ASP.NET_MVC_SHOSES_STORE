@@ -107,7 +107,6 @@ namespace BTL_WEB_MVC.Controllers
 			return View("Register");
 
 
-
 		}
 
         public IActionResult CheckAuthentication()
@@ -115,14 +114,7 @@ namespace BTL_WEB_MVC.Controllers
             string email = HttpContext.Session.GetString("email");
 
             User user = db.Users.Where(u => u.email == email).FirstOrDefault();
-            int totalQuantity = 0;
-         /*   if (user != null)
-            {
-
-                totalQuantity = InvoiceController.CardTotalQuantity(db, user.UserId);
-            }
-*/
-
+           
 
             return new JsonResult(user);
         }
